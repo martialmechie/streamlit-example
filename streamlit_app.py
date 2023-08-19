@@ -3,15 +3,25 @@ import altair as alt
 import math
 import pandas as pd
 import streamlit as st
+import numpy as np
 
-"""
-# My first app
-Here's our first attempt at using data to create a table:
-"""
+# Create a title for the app
+st.title('Math Chatbot')
 
-df = pd.DataFrame({
-  'first column': [1, 2, 3, 4],
-  'second column': [10, 20, 30, 40]
-})
+# Create a text input field
+question = st.text_input('Enter your question:')
 
-df
+# Check if the user has entered a question
+if question:
+
+    # Try to parse the question as a math expression
+    try:
+        answer = np.eval(question)
+
+    # If the question is not a valid math expression, show an error message
+    except:
+        st.error('Invalid math expression.')
+
+    # Otherwise, show the answer to the question
+    else:
+        st.write('The answer is:', answer)
