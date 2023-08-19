@@ -4,6 +4,7 @@ import math
 import pandas as pd
 import streamlit as st
 import numpy as np
+import tensorflow as tf
 
 # Create a title for the app
 st.title('Math Chatbot')
@@ -14,14 +15,9 @@ question = st.text_input('Enter your question:')
 # Check if the user has entered a question
 if question:
 
-    # Try to parse the question as a math expression
-    try:
-        answer = np.eval(question)
+    # Use vertex ai to answer the question
+    model = tf.keras.models.load_model('model.h5')
+    answer = model.predict([question])
 
-    # If the question is not a valid math expression, show an error message
-    except:
-        st.error('Invalid math expression.')
-
-    # Otherwise, show the answer to the question
-    else:
-        st.write('The answer is:', answer)
+    # Show the answer to the question
+    st.write('The answer is:', answer)
